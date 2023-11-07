@@ -2,10 +2,10 @@
 
 [Read me after cloning this template (GS staff only)](https://handbook.giantswarm.io/docs/dev-and-releng/app-developer-processes/adding_app_to_appcatalog/)
 
-# kube-green chart
+# kube-downscaler chart
 
-Giant Swarm offers a kube-green App which can be installed in workload clusters.
-Here we define the kube-green chart with its templates and default configuration.
+Giant Swarm offers a kube-downscaler App which can be installed in workload clusters.
+Here we define the kube-downscaler chart with its templates and default configuration.
 
 **What is this app?**
 
