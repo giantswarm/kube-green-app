@@ -1,12 +1,42 @@
-name: kube-downscaler
-serviceType: managed
-
-project:
-  branch: "[[ .Branch ]]"
-  commit: "[[ .SHA ]]"
-
 image:
-  registry: quay.io
+  registry: docker.io
   name: giantswarm/kube-downscaler
-  tag: v0.0.1
+  tag: 23.2.0
   pullPolicy: IfNotPresent
+  args: []
+
+rbac:
+  serviceAccount:
+    create: true
+    name: ""
+
+resources: {}
+
+# Reconciliation interval
+interval: 60
+
+debug:
+  enabled: true
+
+scalingInfo: |
+  DEFAULT_DOWNTIME="Sat-Sun 00:00-24:00 CET"
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  seccompProfile:
+    type: RuntimeDefault
+
+podSecurityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+  seccompProfile:
+    type: RuntimeDefault
