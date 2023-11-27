@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-  {{- include "labels.common" . | nindent 4 }}
+    {{- include "labels.common" . | nindent 4 }}
   name: {{ template "kube-downscaler.name" . }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-    {{- include "labels.common" . | nindent 6 }}
+      {{- include "labels.common" . | nindent 6 }}
   template:
     metadata:
       labels:
