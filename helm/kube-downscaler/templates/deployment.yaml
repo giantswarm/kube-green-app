@@ -37,7 +37,7 @@ spec:
         {{- end -}}
         envFrom:
           - configMapRef:
-              name: {{ template "kube-downscaler.name" . }}
+              name: "{{ template "kube-downscaler.name" . }}"
               optional: true
         {{- with .Values.securityContext }}
         securityContext:
