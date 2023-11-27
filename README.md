@@ -4,14 +4,21 @@
 
 # kube-downscaler chart
 
-Giant Swarm offers a kube-downscaler App which can be installed in workload clusters.
+Giant Swarm offers a kube-downscaler App which can be installed in management clusters.
 Here we define the kube-downscaler chart with its templates and default configuration.
 
 **What is this app?**
 
+This app allows to scale down clusters' workload when it's not needed. `kube-downscaler` is a tool which scales down deployments, statefulsets even when horizontal-pod-autoscaler is enabled and suspend cronjobs.
+
+For more details concerning the tool itself, check the [upstream project](https://codeberg.org/hjacobs/kube-downscaler).
+
 **Why did we add it?**
 
-**Who can use it?**
+By scaling down clusters when those are not used we achieve 2 main goals :
+
+* Saving on infrastructure cost
+* Reducing our carbon footprint
 
 ## Installing
 
@@ -28,43 +35,25 @@ There are several ways to install this app onto a workload cluster.
 **This is an example of a values file you could upload using our web interface.**
 
 ```yaml
-# values.yaml
+scalingInfo: |
+  DEFAULT_DOWNTIME="Sat-Sat 02:00-24:00 CET,Sun-Sun 00:00-22:00"
 
 ```
 
-### Sample App CR and ConfigMap for the management cluster
+This values file specify the `DEFAULT_DOWNTIME` period, which is the time period during which the workload will be scaled down. In the above example, the downscaling will happen from Saturday 02:00 to Sunday 22:00.
 
-If you have access to the Kubernetes API on the management cluster, you could create
-the App CR and ConfigMap directly.
+You may instead use the `DEFAULT_UPTIME` variable which will define the time period during which the workload should be up, meaning that every period outside of the specified range, the workload will be downscaled. For example, if one specifies `DEFAULT_UPTIME="Mon-Fri 07:30-20:30 Europe/Berlin"`, the workload will be downscaled every nights from 20:30 to 07:30 for each week days (Monday to Friday).
 
-Here is an example that would install the app to
-workload cluster `abc12`:
+### Excluding workload from downscale
 
-```yaml
-# appCR.yaml
+You can exclude workloads by using the `downscaler/exclude: true` annotation. You can also override the default downtime/uptime defined in the values for any workload with the `downscaler/uptime` or `downscaler/downtime` annotations.
 
-```
-
-```yaml
-# user-values-configmap.yaml
-
-```
-
-See our [full reference on how to configure apps](https://docs.giantswarm.io/getting-started/app-platform/app-configuration/) for more details.
-
-## Compatibility
-
-This app has been tested to work with the following workload cluster release versions:
-
-- _add release version_
+For more detailed configuration possibilities, please check out the [upstream project](https://codeberg.org/hjacobs/kube-downscaler).
 
 ## Limitations
 
-Some apps have restrictions on how they can be deployed.
-Not following these limitations will most likely result in a broken deployment.
-
-- _add limitation_
+This app only scales down workload and doesn't actually scales down the cluster's nodes. This tool is thus best used alongside a `cluster-autoscaling` solution so that when cluster's nodes are having their workload greatly reduced, those can be scaled down as well.
 
 ## Credit
 
-- {APP HELM REPOSITORY}
+-  https://codeberg.org/hjacobs/kube-downscaler
