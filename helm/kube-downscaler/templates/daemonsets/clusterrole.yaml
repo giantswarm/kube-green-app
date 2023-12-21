@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+  {{- include "labels.common" . | nindent 4 }}
+  name: {{ template "kube-downscaler.name" . }}-daemonset-downscaler
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  verbs:
+  - get
+  - watch
+  - list
+  - update
+  - patch

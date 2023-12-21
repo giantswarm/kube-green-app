@@ -1,0 +1,66 @@
+{{- if .Values.daemonset.downscale }}
+{{- $global := . }}
+{{- range $ds := .Values.daemonset.list }}
+{{- with $global }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ template "kube-downscaler.name" . }}-{{ $ds.name }}-doswnscaler
+  namespace: {{ .Release.Namespace }}
+  labels:
+     {{- include "labels.common" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+spec:
+  schedule: {{ .Values.daemonset.job.downscaleSchedule }}
+  template:
+    metadata:
+      labels:
+        {{- include "labels.common" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "kube-downscaler.name" . }}-daemonset-downscaler
+      restartPolicy: OnFailure      
+      containers:
+      - name: {{ template "kube-downscaler.name" . }}-daemonset-doswnscaler
+        image: "{{ .Values.daemonset.job.image.registry }}/{{ .Values.daemonset.job.image.name }}:{{ .Values.daemonset.job.image.tag }}"
+        imagePullPolicy: {{ .Values.daemonset.job.image.pullPolicy }}
+        args:
+        - "-n={{ $ds.namespace }}"
+        - "patch"
+        - "daemonset"
+        - "{{ $ds.name }}"
+        - '-p={"spec": {"template": {"spec": {"nodeSelector": {"non-existing": "true"}}}}}'
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ template "kube-downscaler.name" . }}-{{ $ds.name }}-awakener
+  namespace: {{ .Release.Namespace }}
+  labels:
+     {{- include "labels.common" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+spec:
+  schedule: {{ .Values.daemonset.job.upscaleSchedule }}
+  template:
+    metadata:
+      labels:
+        {{- include "labels.common" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "kube-downscaler.name" . }}-daemonset-downscaler
+      restartPolicy: OnFailure      
+      containers:
+      - name: {{ template "kube-downscaler.name" . }}-daemonset-awekener
+        image: "{{ .Values.daemonset.job.image.registry }}/{{ .Values.daemonset.job.image.name }}:{{ .Values.daemonset.job.image.tag }}"
+        imagePullPolicy: {{ .Values.daemonset.job.image.pullPolicy }}
+        args:
+        - "-n={{ $ds.namespace }}"
+        - "patch"
+        - "daemonset"
+        - "{{ $ds.name }}"
+        - "--type=json"
+        - '-p=[{"op": "remove", "path": "/spec/template/spec/nodeSelector/non-existing"}]'
+{{- end }}
+{{- end }}
+{{- end }}

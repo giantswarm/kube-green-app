@@ -2,6 +2,56 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
+        "daemonset": {
+            "type": "object",
+            "properties": {
+                "downscale": {
+                    "type": "boolean"
+                },
+                "job": {
+                    "type": "object",
+                    "properties": {
+                        "downscaleSchedule": {
+                            "type": "string"
+                        },
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "pullPolicy": {
+                                    "type": "string"
+                                },
+                                "registry": {
+                                    "type": "string"
+                                },
+                                "tag": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "upscaleSchedule": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "namespace": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "debug": {
             "type": "object",
             "properties": {

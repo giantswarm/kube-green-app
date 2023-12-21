@@ -18,6 +18,23 @@ interval: 60
 debug:
   enabled: true
 
+daemonset:
+  downscale: true
+  job:
+    image:
+      registry: docker.io
+      name: giantswarm/kubectl
+      tag: 1.28.4
+      pullPolicy: IfNotPresent
+    # The downscaleSchedule Field must match the scalingInfo field's beginning time
+    downscaleSchedule: "0 2 * * 6"
+    # The upscaleSchedule Field must match the scalingInfo field's ending time
+    upscaleSchedule: "0 22 * * 7"
+  # A list of the daemonsets that should be downscaled. Each list's member must be as follows :
+  # - name: <daemonset-name>
+  #   namespace: <daemonset-namespace>
+  list: []
+
 scalingInfo: |
   DEFAULT_DOWNTIME="Sat-Sat 02:00-24:00 CET,Sun-Sun 00:00-22:00"
 
