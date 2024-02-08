@@ -5,5 +5,5 @@ metadata:
   {{- include "labels.common" . | nindent 4 }}
   name: {{ template "kube-downscaler.name" . }}
   namespace: {{ .Release.Namespace }}
-data: | 
+data: 
 {{ .Values.scalingInfo | indent 2 }}
