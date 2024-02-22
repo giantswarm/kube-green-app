@@ -36,6 +36,9 @@ spec:
         resources:
           {{ toYaml . | nindent 10 }}
         {{- end }}
+        env:
+        - name: DOWNTIME_REPLICAS
+          value: "{{ .Values.downtime.replicas }}"
         envFrom:
           - configMapRef:
               name: "{{ template "kube-downscaler.name" . }}"
