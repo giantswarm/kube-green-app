@@ -35,6 +35,9 @@ daemonset:
   #   namespace: <daemonset-namespace>
   list: []
 
+downtime:
+  replicas: 1
+
 scalingInfo: |
   DEFAULT_DOWNTIME: "Sat-Sat 02:00-24:00 CET,Sun-Sun 00:00-22:00 CET"
 
