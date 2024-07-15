@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2024-07-15
+
 ### Changed
 
 - Added `enabled` field in values to disable whole chart if needed.
@@ -21,5 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - changed: `app.giantswarm.io` label group was changed to `application.giantswarm.io`
 
-[Unreleased]: https://github.com/giantswarm/kube-downscaler-app/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kube-downscaler-app/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/giantswarm/kube-downscaler-app/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/giantswarm/kube-downscaler-app/releases/tag/v0.1.0
