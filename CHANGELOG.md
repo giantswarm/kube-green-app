@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Added `enabled` field in values to disable whole chart if needed.
+
 ## [0.1.0] - 2024-04-05
 
 ### Added

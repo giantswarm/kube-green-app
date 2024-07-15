@@ -1,3 +1,5 @@
+enabled: false
+
 image:
   registry: docker.io
   name: giantswarm/kube-downscaler

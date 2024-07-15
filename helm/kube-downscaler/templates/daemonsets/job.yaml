@@ -1,4 +1,4 @@
-{{- if .Values.daemonset.downscale }}
+{{- if and .Values.enabled .Values.daemonset.downscale }}
 {{- $global := . }}
 {{- range $ds := .Values.daemonset.list }}
 {{- with $global }}
