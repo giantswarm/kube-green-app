@@ -37,18 +37,7 @@
                     }
                 },
                 "list": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "namespace": {
-                                "type": "string"
-                            }
-                        }
-                    }
+                    "type": "array"
                 }
             }
         },
@@ -59,6 +48,17 @@
                     "type": "boolean"
                 }
             }
+        },
+        "downtime": {
+            "type": "object",
+            "properties": {
+                "replicas": {
+                    "type": "integer"
+                }
+            }
+        },
+        "enabled": {
+            "type": "boolean"
         },
         "image": {
             "type": "object",
