@@ -17,6 +17,9 @@ resources: {}
 # Reconciliation interval
 interval: 60
 
+ciliumNetworkPolicy:
+  enabled: false
+
 debug:
   enabled: true
 

@@ -1,0 +1,30 @@
+{{- if .Values.ciliumNetworkPolicy.enabled -}}
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ template "kube-downscaler.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "labels.common" . | nindent 4 }}
+spec:
+  egress:
+  - toEntities:
+    - kube-apiserver
+  - toEndpoints:
+    - matchLabels:
+        k8s-app: coredns
+    - matchLabels:
+        k8s-app: k8s-dns-node-cache
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: ANY
+      - port: "1053"
+        protocol: ANY
+      rules:
+        dns:
+        - matchPattern: '*'
+  endpointSelector:
+    matchLabels:
+    {{- include "labels.selector" . | nindent 6 }}
+{{- end }}
