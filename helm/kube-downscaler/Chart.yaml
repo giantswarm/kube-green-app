@@ -7,4 +7,4 @@ sources:
   - https://codeberg.org/hjacobs/kube-downscaler
 version: 0.4.0
 annotations:
-  application.giantswarm.io/team: horizon
+  application.giantswarm.io/team: planeteers
